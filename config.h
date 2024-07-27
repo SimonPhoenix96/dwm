@@ -3,6 +3,7 @@
 /* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
+#define BROWSER "firefox"
 
 /* appearance */
 /* BorderMode=false */
@@ -19,7 +20,7 @@ static int topbar = 1;			  /* 0 means bottom bar */
 // static char *fonts[]          = { "monospace:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
 // static char *fonts[]          = { "xos4 Terminus:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true",
 //"monospace:size=10"  };
-static char *fonts[] = {"Terminus:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true", "monospace:size=10"};
+static char *fonts[] = {"Terminus:size=10", "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true", "monospace:size=10"};
 static char normbgcolor[] = "#222222";
 static char normbordercolor[] = "#444444";
 static char normfgcolor[] = "#bbbbbb";
@@ -160,41 +161,41 @@ ResourcePref resources[] = {
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
 
-static Key keys[] = {
-	/* modifier                     key        function        argument */
-	STACKKEYS(MODKEY, focus)
-		STACKKEYS(MODKEY | ShiftMask, push)
-	/* { MODKEY|ShiftMask,		XK_Escape,	spawn,	SHCMD("") }, */
-	{MODKEY, XK_grave, spawn, SHCMD("dmenuunicode")},
-	{MODKEY, XK_g, setlayout, {.v = &layouts[10]}},
-	/* { MODKEY|ShiftMask,		XK_grave,	togglescratch,	SHCMD("") }, */
-	TAGKEYS(XK_1, 0)
-		TAGKEYS(XK_2, 1)
-			TAGKEYS(XK_3, 2)
-				TAGKEYS(XK_4, 3)
-					TAGKEYS(XK_5, 4)
-						TAGKEYS(XK_6, 5)
-							TAGKEYS(XK_7, 6)
-								TAGKEYS(XK_8, 7)
-									TAGKEYS(XK_9, 8){MODKEY, XK_0, view, {.ui = ~0}},
-	{MODKEY | ShiftMask, XK_0, tag, {.ui = ~0}},
-	{MODKEY, XK_minus, spawn, SHCMD("pamixer -d 5; kill -44 $(pidof dwmblocks)")},
-	{MODKEY | ShiftMask, XK_minus, spawn, SHCMD("pamixer -d 15; kill -44 $(pidof dwmblocks)")},
-	{MODKEY, XK_equal, spawn, SHCMD("pamixer -i 5; kill -44 $(pidof dwmblocks)")},
-	{MODKEY | ShiftMask, XK_equal, spawn, SHCMD("pamixer -i 15; kill -44 $(pidof dwmblocks)")},
-	{MODKEY, XK_BackSpace, spawn, SHCMD("")},
-	{MODKEY | ShiftMask, XK_BackSpace, spawn, SHCMD("")},
+static const Key keys[] = {
+	/* modifier                     key            function                argument */
+	STACKKEYS(MODKEY,                              focus)
+	STACKKEYS(MODKEY|ShiftMask,                    push)
+	/* { MODKEY|ShiftMask,		XK_Escape,     spawn,	               SHCMD("") }, */
+	{ MODKEY,			XK_grave,      spawn,	               {.v = (const char*[]){ "dmenuunicode", NULL } } },
+	/* { MODKEY|ShiftMask,		XK_grave,      togglescratch,	       SHCMD("") }, */
+	TAGKEYS(			XK_1,          0)
+	TAGKEYS(			XK_2,          1)
+	TAGKEYS(			XK_3,          2)
+	TAGKEYS(			XK_4,          3)
+	TAGKEYS(			XK_5,          4)
+	TAGKEYS(			XK_6,          5)
+	TAGKEYS(			XK_7,          6)
+	TAGKEYS(			XK_8,          7)
+	TAGKEYS(			XK_9,          8)
+	{ MODKEY,			XK_0,	       view,                   {.ui = ~0 } },
+	{ MODKEY|ShiftMask,		XK_0,	       tag,                    {.ui = ~0 } },
+	{ MODKEY,			XK_minus,      spawn,                  SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask,		XK_minus,      spawn,                  SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%-; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_equal,      spawn,                  SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask,		XK_equal,      spawn,                  SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_BackSpace,  spawn,                  {.v = (const char*[]){ "sysact", NULL } } },
+	{ MODKEY|ShiftMask,		XK_BackSpace,  spawn,                  {.v = (const char*[]){ "sysact", NULL } } },
 
 	{MODKEY, XK_Tab, view, {0}},
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
 	{MODKEY, XK_q, killclient, {0}},
 	/* quit dwm, used for restarting after recompiling dwm */
-	{MODKEY | ShiftMask, XK_q, quit, {0}},
-	{MODKEY, XK_w, spawn, SHCMD("chromium")},
-	{MODKEY | ShiftMask, XK_w, spawn, SHCMD("firefox")},
+	{ MODKEY|ShiftMask,		XK_q,          spawn,                  {.v = (const char*[]){ "sysact", NULL } } },
+	{ MODKEY,			XK_w,          spawn,                  {.v = (const char*[]){ BROWSER, NULL } } },
+	{MODKEY | ShiftMask, XK_w, spawn, SHCMD("librewolf")},
 	{MODKEY, XK_e, spawn, SHCMD("emacs")},
 	{MODKEY | ShiftMask, XK_e, spawn, SHCMD(TERMINAL " -e emacs -nw")},
-	{MODKEY, XK_r, spawn, SHCMD(TERMINAL " -e lf")},
+	{ MODKEY,			XK_r,          spawn,                  {.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
 	{MODKEY | ShiftMask, XK_r, spawn, SHCMD(TERMINAL " -e btop --utf-force")},
 	{MODKEY, XK_t, setlayout, {.v = &layouts[0]}},			   /* tile */
 	{MODKEY | ShiftMask, XK_t, setlayout, {.v = &layouts[1]}}, /* bstack */
@@ -248,7 +249,7 @@ static Key keys[] = {
 	{MODKEY, XK_b, togglebar, {0}},
 	/* { MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("") }, */
 	{MODKEY | ShiftMask, XK_n, spawn, SHCMD(TERMINAL "")},
-	{MODKEY, XK_n, spawn, SHCMD(TERMINAL " -e killall newsboat ; newsboat; pkill -RTMIN+6 dwmblocks")},
+	{ MODKEY|ShiftMask,		XK_n,          spawn,                  SHCMD(TERMINAL " -e newsboat ; pkill -RTMIN+6 dwmblocks") },
 	{MODKEY, XK_m, spawn, SHCMD(TERMINAL "")},
 	{MODKEY | ShiftMask, XK_m, spawn, SHCMD(TERMINAL " -e pulsemixer")},
 	{MODKEY, XK_comma, spawn, SHCMD("")},
@@ -275,7 +276,7 @@ static Key keys[] = {
 	{MODKEY, XK_F6, spawn, SHCMD("")},
 	{MODKEY, XK_F7, spawn, SHCMD("")},
 	{MODKEY, XK_F8, spawn, SHCMD("")},
-	{MODKEY, XK_F9, spawn, SHCMD("")},
+	{ MODKEY,			XK_F9,         spawn,                  {.v = (const char*[]){ "mounter", NULL } } },
 	{MODKEY, XK_F10, spawn, SHCMD("pactl set-card-profile alsa_card.pci-0000_0b_00.1 output:hdmi-surround-extra3 && pactl set-default-sink alsa_output.pci-0000_0b_00.1.hdmi-surround-extra3 &&  notify-send 'Speaker Mode: Surround'")},
 	{MODKEY, XK_F11, spawn, SHCMD("pactl set-card-profile alsa_card.pci-0000_0b_00.1 output:hdmi-stereo-extra3 && pactl set-default-sink alsa_output.pci-0000_0b_00.1.hdmi-stereo-extra3 &&  notify-send 'Speaker Mode: Stereo'")},
 	{MODKEY, XK_F12, spawn, SHCMD("pactl set-card-profile alsa_card.pci-0000_0d_00.4 output:analog-stereo+input:analog-stereo  && pactl set-default-sink alsa_output.pci-0000_0d_00.4.analog-stereo  &&  notify-send 'Speaker Mode: Headphones' ")},
@@ -289,34 +290,34 @@ static Key keys[] = {
 	{MODKEY, XK_Delete, spawn, SHCMD("")},
 	{MODKEY, XK_Scroll_Lock, spawn, SHCMD("")},
 
-	{0, XF86XK_AudioMute, spawn, SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)")},
-	{0, XF86XK_AudioRaiseVolume, spawn, SHCMD("pamixer -i 3; kill -44 $(pidof dwmblocks)")},
-	{0, XF86XK_AudioLowerVolume, spawn, SHCMD("pamixer -d 3; kill -44 $(pidof dwmblocks)")},
-	{0, XF86XK_AudioPrev, spawn, SHCMD("playerctl previous")},
-	{0, XF86XK_AudioNext, spawn, SHCMD("playerctl next")},
-	{0, XF86XK_AudioPause, spawn, SHCMD("playerctl play-pause")},
-	{0, XF86XK_AudioPlay, spawn, SHCMD("playerctl play-pause")},
-	{0, XF86XK_AudioStop, spawn, SHCMD("playerctl stop")},
-	{0, XF86XK_AudioRewind, spawn, SHCMD("playerctl seek -10")},
-	{0, XF86XK_AudioForward, spawn, SHCMD("playerctl seek +10")},
-	{0, XF86XK_AudioMedia, spawn, SHCMD(TERMINAL "")},
-	{0, XF86XK_AudioMicMute, spawn, SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle")},
-	{0, XF86XK_PowerOff, spawn, SHCMD("")},
-	{0, XF86XK_Calculator, spawn, SHCMD(TERMINAL " -e bc -l")},
-	{0, XF86XK_Sleep, spawn, SHCMD("")},
-	{0, XF86XK_WWW, spawn, SHCMD("$BROWSER")},
-	{0, XF86XK_DOS, spawn, SHCMD(TERMINAL)},
-	{0, XF86XK_ScreenSaver, spawn, SHCMD("")},
-	{0, XF86XK_TaskPane, spawn, SHCMD(TERMINAL " -e btop --utf-force")},
-	{0, XF86XK_Mail, spawn, SHCMD(TERMINAL "")},
-	{0, XF86XK_MyComputer, spawn, SHCMD(TERMINAL " -e lf /")},
-	/* { 0, XF86XK_Battery,		spawn,		SHCMD("") }, */
-	{0, XF86XK_Launch1, spawn, SHCMD("")},
-	{0, XF86XK_TouchpadToggle, spawn, SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1")},
-	{0, XF86XK_TouchpadOff, spawn, SHCMD("synclient TouchpadOff=1")},
-	{0, XF86XK_TouchpadOn, spawn, SHCMD("synclient TouchpadOff=0")},
-	{0, XF86XK_MonBrightnessUp, spawn, SHCMD("xbacklight -inc 15")},
-	{0, XF86XK_MonBrightnessDown, spawn, SHCMD("xbacklight -dec 15")},
+	{ 0, XF86XK_AudioMute,                         spawn,                  SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,                  spawn,                  SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%- && wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,                  spawn,                  SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%+ && wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioPrev,                         spawn,                  {.v = (const char*[]){ "mpc", "prev", NULL } } },
+	{ 0, XF86XK_AudioNext,                         spawn,                  {.v = (const char*[]){ "mpc",  "next", NULL } } },
+	{ 0, XF86XK_AudioPause,                        spawn,                  {.v = (const char*[]){ "mpc", "pause", NULL } } },
+	{ 0, XF86XK_AudioPlay,                         spawn,                  {.v = (const char*[]){ "mpc", "play", NULL } } },
+	{ 0, XF86XK_AudioStop,                         spawn,                  {.v = (const char*[]){ "mpc", "stop", NULL } } },
+	{ 0, XF86XK_AudioRewind,                       spawn,                  {.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },
+	{ 0, XF86XK_AudioForward,                      spawn,                  {.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },
+	{ 0, XF86XK_AudioMedia,                        spawn,                  {.v = (const char*[]){ TERMINAL, "-e", "ncmpcpp", NULL } } },
+	{ 0, XF86XK_AudioMicMute,                      spawn,                  SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
+	/* { 0, XF86XK_PowerOff,                       spawn,                  {.v = (const char*[]){ "sysact", NULL } } }, */
+	{ 0, XF86XK_Calculator,                        spawn,                  {.v = (const char*[]){ TERMINAL, "-e", "bc", "-l", NULL } } },
+	{ 0, XF86XK_Sleep,                             spawn,                  {.v = (const char*[]){ "sudo", "-A", "zzz", NULL } } },
+	{ 0, XF86XK_WWW,                               spawn,                  {.v = (const char*[]){ BROWSER, NULL } } },
+	{ 0, XF86XK_DOS,                               spawn,                  {.v = termcmd } },
+	{ 0, XF86XK_ScreenSaver,                       spawn,                  SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
+	{ 0, XF86XK_TaskPane,                          spawn,                  {.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
+	{ 0, XF86XK_Mail,                              spawn,                  SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
+	{ 0, XF86XK_MyComputer,                        spawn,                  {.v = (const char*[]){ TERMINAL, "-e",  "lfub",  "/", NULL } } },
+	/* { 0, XF86XK_Battery,                        spawn,                  SHCMD("") }, */
+	{ 0, XF86XK_Launch1,                           spawn,                  {.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } },
+	{ 0, XF86XK_TouchpadToggle,                    spawn,                  SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
+	{ 0, XF86XK_TouchpadOff,                       spawn,                  {.v = (const char*[]){ "synclient", "TouchpadOff=1", NULL } } },
+	{ 0, XF86XK_TouchpadOn,                        spawn,                  {.v = (const char*[]){ "synclient", "TouchpadOff=0", NULL } } },
+	{ 0, XF86XK_MonBrightnessUp,                   spawn,                  {.v = (const char*[]){ "xbacklight", "-inc", "15", NULL } } },
+	{ 0, XF86XK_MonBrightnessDown,                 spawn,                  {.v = (const char*[]){ "xbacklight", "-dec", "15", NULL } } },
 
 	/* { MODKEY|Mod4Mask,              XK_h,      incrgaps,       {.i = +1 } }, */
 	/* { MODKEY|Mod4Mask,              XK_l,      incrgaps,       {.i = -1 } }, */
