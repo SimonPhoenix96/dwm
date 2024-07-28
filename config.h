@@ -179,10 +179,10 @@ static const Key keys[] = {
 	TAGKEYS(			XK_9,          8)
 	{ MODKEY,			XK_0,	       view,                   {.ui = ~0 } },
 	{ MODKEY|ShiftMask,		XK_0,	       tag,                    {.ui = ~0 } },
-	{ MODKEY,			XK_minus,      spawn,                  SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; kill -44 $(pidof dwmblocks)") },
-	{ MODKEY|ShiftMask,		XK_minus,      spawn,                  SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%-; kill -44 $(pidof dwmblocks)") },
-	{ MODKEY,			XK_equal,      spawn,                  SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+; kill -44 $(pidof dwmblocks)") },
-	{ MODKEY|ShiftMask,		XK_equal,      spawn,                  SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 15%+; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY,			XK_minus,      spawn,                  SHCMD("$HOME/.local/bin/keyboard-layout-switcher.sh") },
+	{ MODKEY|ShiftMask,		XK_minus,      spawn,                  SHCMD("") },
+	{ MODKEY,			XK_equal,      spawn,                  SHCMD("") },
+	{ MODKEY|ShiftMask,		XK_equal,      spawn,                  SHCMD("") },
 	{ MODKEY,			XK_BackSpace,  spawn,                  {.v = (const char*[]){ "sysact", NULL } } },
 	{ MODKEY|ShiftMask,		XK_BackSpace,  spawn,                  {.v = (const char*[]){ "sysact", NULL } } },
 
@@ -207,7 +207,7 @@ static const Key keys[] = {
 	{MODKEY | ShiftMask, XK_i, setlayout, {.v = &layouts[7]}}, /* centeredfloatingmaster */
 	{MODKEY, XK_o, incnmaster, {.i = +1}},
 	{MODKEY | ShiftMask, XK_o, incnmaster, {.i = -1}},
-	{MODKEY, XK_p, spawn, SHCMD("")},
+	{MODKEY, XK_p, spawn, SHCMD("$HOME/.local/bin/keyboard-layout-switcher.sh")},
 	{MODKEY | ShiftMask, XK_p, spawn, SHCMD("")},
 	{MODKEY, XK_bracketleft, spawn, SHCMD("")},
 	{MODKEY | ShiftMask, XK_bracketleft, spawn, SHCMD("")},
