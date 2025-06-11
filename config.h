@@ -3,7 +3,7 @@
 /* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
-#define BROWSER "firefox"
+#define BROWSER "chromium"
 
 /* appearance */
 /* BorderMode=false */
@@ -282,7 +282,7 @@ static const Key keys[] = {
 	{ MODKEY,			XK_F12,        spawn,                  SHCMD("remaps") },
 	{ MODKEY,			XK_space,      zoom,                   {0} },
 	{ MODKEY|ShiftMask,		XK_space,      togglefloating,         {0} },
-	
+
 	{0, XK_Print, spawn, SHCMD("")},
 	{MODKEY, XK_Home, spawn, SHCMD("flameshot gui -c -p ~/Pictures/Screenshots")},
 	{ShiftMask, XK_Home, spawn, SHCMD("")},
@@ -364,3 +364,4 @@ static Button buttons[] = {
 	{ClkTagBar, 0, Button5, shiftview, {.i = 1}},
 	{ClkRootWin, 0, Button2, togglebar, {0}},
 };
+
