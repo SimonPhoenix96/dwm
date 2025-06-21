@@ -201,7 +201,7 @@ static const Key keys[] = {
 	{MODKEY, XK_e, spawn, SHCMD("emacs")},
 	{MODKEY | ShiftMask, XK_e, spawn, SHCMD(TERMINAL " -e emacs -nw")},
 	{ MODKEY,			XK_r, spawn, SHCMD("dolphin")},
-	{MODKEY | ShiftMask, XK_r, spawn, SHCMD(TERMINAL " -e btop --utf-force")},
+	{MODKEY | ShiftMask, XK_r, spawn, SHCMD(TERMINAL " -e btop --force-utf")},
 	{MODKEY, XK_t, setlayout, {.v = &layouts[0]}},			   /* tile */
 	{MODKEY | ShiftMask, XK_t, setlayout, {.v = &layouts[1]}}, /* bstack */
 	{MODKEY, XK_y, setlayout, {.v = &layouts[2]}},			   /* spiral */
