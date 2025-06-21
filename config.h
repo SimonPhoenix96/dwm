@@ -303,6 +303,8 @@ static const Key keys[] = {
 	{ 0, XF86XK_AudioLowerVolume,                  spawn,                  SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%+ && wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- -l 1.0; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioPrev,                         spawn,                  {.v = (const char*[]){ "playerctl", "previous", NULL } } },
 	{ 0, XF86XK_AudioNext,                         spawn,                  {.v = (const char*[]){ "playerctl", "next", NULL } } },
+	{ MODKEY|ShiftMask, XF86XK_AudioPrev,          spawn,                  {.v = (const char*[]){ "playerctl", "position", "10-", NULL } } },
+	{ MODKEY|ShiftMask, XF86XK_AudioNext,          spawn,                  {.v = (const char*[]){ "playerctl", "position", "10+", NULL } } },
 	{ 0, XF86XK_AudioPause,                        spawn,                  {.v = (const char*[]){ "playerctl", "play-pause", NULL } } },
 	{ 0, XF86XK_AudioPlay,                         spawn,                  {.v = (const char*[]){ "playerctl", "play-pause", NULL } } },
 	{ 0, XF86XK_AudioStop,                         spawn,                  {.v = (const char*[]){ "playerctl", "play-pause", NULL } } },
