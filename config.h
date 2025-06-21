@@ -11,7 +11,7 @@ static unsigned int borderpx = 0; /* border pixel of windows */
 static unsigned int snap = 1;	  /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 1;    /* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const unsigned int systrayspacing = 8;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray = 1;        /* 0 means no systray */
 static unsigned int gappih = 20;  /* horiz inner gap between windows */
@@ -276,19 +276,14 @@ static const Key keys[] = {
 	{MODKEY | ShiftMask, XK_Page_Down, shifttag, {.i = -1}},
 	{MODKEY, XK_Insert, spawn, SHCMD("")},
 
-	/* Additional useful shortcuts */
-	{ MODKEY,                       XK_n,          spawn,                  SHCMD(TERMINAL " -e ranger") },
-	{ MODKEY|ControlMask,           XK_m,          spawn,                  SHCMD("notify-send 'DWM' 'Window manager ready'") },
-	{ MODKEY|ControlMask,           XK_r,          spawn,                  SHCMD("pkill -USR1 redshift") },
-	{ MODKEY|ControlMask,           XK_l,          spawn,                  SHCMD("slock") },
 	{ MODKEY,			XK_F1,         spawn,                  SHCMD("groff -mom /usr/local/share/dwm/larbs.mom -Tpdf | zathura -") },
-	{ MODKEY,			XK_F2,         spawn,                  {.v = (const char*[]){ "playerctl", "play-pause", NULL } } },
+	{ MODKEY,			XK_F2,         spawn,                  SHCMD("")},
 	{ MODKEY,			XK_F3,         spawn,                  {.v = (const char*[]){ "displayselect", NULL } } },
-	{ MODKEY,			XK_F4,         spawn,                  SHCMD("pavucontrol")},
-	{ MODKEY,			XK_F5,         spawn,                   {.v = (const char*[]){ "strawberry", NULL } } },
-	{ MODKEY,			XK_F6,         spawn,                  SHCMD("blueman-manager")},
-	{ MODKEY,			XK_F7,         spawn,                  SHCMD("nm-connection-editor")},
-	{ MODKEY,			XK_F8,         spawn,                  SHCMD("pavucontrol")},
+	{ MODKEY,			XK_F4,         spawn,                  SHCMD("")},
+	{ MODKEY,			XK_F5,         spawn,                   SHCMD("")},
+	{ MODKEY,			XK_F6,         spawn,                  SHCMD("")},
+	{ MODKEY,			XK_F7,         spawn,                  SHCMD("")},
+	{ MODKEY,			XK_F8,         spawn,                  SHCMD("")},
 	{ MODKEY,			XK_F9,         spawn,                  {.v = (const char*[]){ "mounter", NULL } } },
 	{ MODKEY,			XK_F10,        spawn,                  {.v = (const char*[]){ "unmounter", NULL } } },
 	{ MODKEY,			XK_F11,        spawn,                  SHCMD("mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
@@ -296,11 +291,11 @@ static const Key keys[] = {
 	{ MODKEY,			XK_space,      zoom,                   {0} },
 	{ MODKEY|ShiftMask,		XK_space,      togglefloating,         {0} },
 
-	{0, XK_Print, spawn, SHCMD("flameshot gui")},
+	{0, XK_Print, spawn, SHCMD("")},
 	{MODKEY, XK_Home, spawn, SHCMD("flameshot gui -c -p ~/Pictures/Screenshots")},
-	{ShiftMask, XK_Home, spawn, SHCMD("flameshot full -c -p ~/Pictures/Screenshots")},
-	{MODKEY | ShiftMask, XK_Print, spawn, SHCMD("flameshot screen -c -p ~/Pictures/Screenshots")},
-	{MODKEY, XK_Delete, spawn, SHCMD("rofi -show filebrowser")},
+	{ShiftMask, XK_Home, spawn, SHCMD("")},
+	{MODKEY | ShiftMask, XK_Print, spawn, SHCMD("")},
+	{MODKEY, XK_Delete, spawn, SHCMD("")},
 	{MODKEY, XK_Scroll_Lock, spawn, SHCMD("")},
 
 	{ 0, XF86XK_AudioMute,                         spawn,                  SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; kill -44 $(pidof dwmblocks)") },
@@ -308,19 +303,46 @@ static const Key keys[] = {
 	{ 0, XF86XK_AudioLowerVolume,                  spawn,                  SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%+ && wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- -l 1.0; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioPrev,                         spawn,                  {.v = (const char*[]){ "playerctl", "previous", NULL } } },
 	{ 0, XF86XK_AudioNext,                         spawn,                  {.v = (const char*[]){ "playerctl", "next", NULL } } },
-	{ 0, XF86XK_AudioPause,                        spawn,                  {.v = (const char*[]){ "playerctl", "play-pause", NULL } } },
-	{ 0, XF86XK_AudioPlay,                         spawn,                  {.v = (const char*[]){ "playerctl", "play-pause", NULL } } },
+	{ 0, XF86XK_AudioPause,                        spawn,                  {.v = (const char*[]){ "playerctl", "pause", NULL } } },
+	{ 0, XF86XK_AudioPlay,                         spawn,                  {.v = (const char*[]){ "playerctl", "play", NULL } } },
 	{ 0, XF86XK_AudioStop,                         spawn,                  {.v = (const char*[]){ "playerctl", "stop", NULL } } },
 	{ 0, XF86XK_AudioRewind,                       spawn,                  {.v = (const char*[]){ "playerctl", "position", "10-", NULL } } },
 	{ 0, XF86XK_AudioForward,                      spawn,                  {.v = (const char*[]){ "playerctl", "position", "10+", NULL } } },
 	{ 0, XF86XK_AudioMedia,                        spawn,                  {.v = (const char*[]){ "playerctl", "play-pause", NULL } } },
-	{ MODKEY|ShiftMask, XF86XK_AudioPrev,          spawn,                  {.v = (const char*[]){ "playerctl", "position", "10-", NULL } } },
-	{ MODKEY|ShiftMask, XF86XK_AudioNext,          spawn,                  {.v = (const char*[]){ "playerctl", "position", "10+", NULL } } },
 	{ 0, XF86XK_AudioMicMute,                      spawn,                  SHCMD("pactl set-source-mute @DEFAULT_SOURCE@ toggle") },
-	
-	/* Shuffle toggle with Mod + Shift + Play/Pause */
-	{ MODKEY|ShiftMask, XF86XK_AudioPlay,          spawn,                  SHCMD("playerctl shuffle Toggle 2>/dev/null || playerctl shuffle On 2>/dev/null || notify-send 'Shuffle not supported'") },
-	{ MODKEY|ShiftMask, XF86XK_AudioPause,         spawn,                  SHCMD("playerctl shuffle Toggle 2>/dev/null || playerctl shuffle On 2>/dev/null || notify-send 'Shuffle not supported'") },
+	/* { 0, XF86XK_PowerOff,                       spawn,                  {.v = (const char*[]){ "sysact", NULL } } }, */
+	{ 0, XF86XK_Calculator,                        spawn,                  {.v = (const char*[]){ TERMINAL, "-e", "bc", "-l", NULL } } },
+	{ 0, XF86XK_Sleep,                             spawn,                  {.v = (const char*[]){ "sudo", "-A", "zzz", NULL } } },
+	{ 0, XF86XK_WWW,                               spawn,                  {.v = (const char*[]){ BROWSER, NULL } } },
+	{ 0, XF86XK_DOS,                               spawn,                  {.v = termcmd } },
+	{ 0, XF86XK_ScreenSaver,                       spawn,                  SHCMD("slock & xset dpms force off; playerctl pause; pauseallmpv") },
+	{ 0, XF86XK_TaskPane,                          spawn,                  {.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
+	{ 0, XF86XK_Mail,                              spawn,                  SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
+	{ 0, XF86XK_MyComputer,                        spawn,                  {.v = (const char*[]){ TERMINAL, "-e",  "lfub",  "/", NULL } } },
+	/* { 0, XF86XK_Battery,                        spawn,                  SHCMD("") }, */
+	{ 0, XF86XK_Launch1,                           spawn,                  {.v = (const char*[]){ "xset", "dpms", "force", "off", NULL } } },
+	{ 0, XF86XK_TouchpadToggle,                    spawn,                  SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
+	{ 0, XF86XK_TouchpadOff,                       spawn,                  {.v = (const char*[]){ "synclient", "TouchpadOff=1", NULL } } },
+	{ 0, XF86XK_TouchpadOn,                        spawn,                  {.v = (const char*[]){ "synclient", "TouchpadOff=0", NULL } } },
+	{ 0, XF86XK_MonBrightnessUp,                   spawn,                  {.v = (const char*[]){ "xbacklight", "-inc", "15", NULL } } },
+	{ 0, XF86XK_MonBrightnessDown,                 spawn,                  {.v = (const char*[]){ "xbacklight", "-dec", "15", NULL } } },
+
+	/* { MODKEY|Mod4Mask,              XK_h,      incrgaps,       {.i = +1 } }, */
+	/* { MODKEY|Mod4Mask,              XK_l,      incrgaps,       {.i = -1 } }, */
+	/* { MODKEY|Mod4Mask|ShiftMask,    XK_h,      incrogaps,      {.i = +1 } }, */
+	/* { MODKEY|Mod4Mask|ShiftMask,    XK_l,      incrogaps,      {.i = -1 } }, */
+	/* { MODKEY|Mod4Mask|ControlMask,  XK_h,      incrigaps,      {.i = +1 } }, */
+	/* { MODKEY|Mod4Mask|ControlMask,  XK_l,      incrigaps,      {.i = -1 } }, */
+	/* { MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} }, */
+	/* { MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } }, */
+	/* { MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } }, */
+	/* { MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } }, */
+	/* { MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } }, */
+	/* { MODKEY|Mod4Mask,              XK_y,      incrohgaps,     {.i = +1 } }, */
+	/* { MODKEY|Mod4Mask,              XK_o,      incrohgaps,     {.i = -1 } }, */
+	/* { MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } }, */
+	/* { MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } }, */
+
 };
 
 /* button definitions */
